@@ -7,16 +7,21 @@
     >
 
     <ImageView
+        android:id="@+id/imageicon"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/imageicon"
-        android:contentDescription="somthing about the image" />
+        android:layout_marginTop="100dp"/>
+
+
 
     <TextView
+        android:id="@+id/textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textview"
+        android:layout_marginTop="125dp"
         android:gravity="center"
-        android:textSize="45dp"
-        android:text="my text"/>
+        android:text="my text"
+        android:textSize="45dp" />
+
+
 </LinearLayout>
