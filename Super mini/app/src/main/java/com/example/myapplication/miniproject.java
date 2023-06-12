@@ -26,14 +26,27 @@ public class miniproject extends AppCompatActivity implements View.OnClickListen
         btnusersactloadusers.setOnClickListener(this);
         btnuseractquit.setOnClickListener(this);
 
+
+
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnusersactloadusers){
-            InputStream inputStream = getResources().openRawResource(R.raw.users);
             try {
-                Toast.makeText(this, Character.toString((char) inputStream.read()), Toast.LENGTH_SHORT).show();
+                InputStream inputStream = getAssets().open("users.json");
+                int code ;
+                StringBuilder stringBuilder = new StringBuilder();
+                String jsonstring ;
+                code = inputStream.read();
+                while (code != -1){
+                    stringBuilder.append((char) code);
+                    code = inputStream.read();
+                }
+                jsonstring = stringBuilder.toString();
+                Toast.makeText(this, jsonstring, Toast.LENGTH_SHORT).show();
+
+
             }catch (IOException e) {
                e.printStackTrace();
             }
