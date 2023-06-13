@@ -33,10 +33,10 @@ public class usersadapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
-    @SuppressLint("ViewHolder")
+    @SuppressLint({"ViewHolder", "DefaultLocale"})
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = inflater.inflate(R.layout.item_user, null);
@@ -47,7 +47,15 @@ public class usersadapter extends BaseAdapter {
 
         tvuserfullname.setText(users.get(position).fullName());
         tvusercity.setText(users.get(position).getCity());
-        tvusergender.setText(users.get(position).getGender());
+        tvusergender.setText(String.format("#%d",getItemId(position +1)));
+
+        String gender = users.get(position).getGender();
+
+        if (gender.equals("male")) {
+            convertView.setBackgroundColor(convertView.getResources().getColor(R.color.blue)); // Set blue color for male
+        } else if (gender.equals("female")) {
+            convertView.setBackgroundColor(convertView.getResources().getColor(R.color.pink)); // Set pink color for female
+        }
 
 
         return convertView;
