@@ -86,13 +86,13 @@ public class miniproject extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnusersactloadusers) {
-            ArrayAdapter<String> adapter = null;
+            ArrayAdapter<User> adapter = null;
             try {
                 InputStream inputStream = getAssets().open("users.json");
                 int code;
                 StringBuilder stringBuilder = new StringBuilder();
                 String jsonString;
-                adapter = new ArrayAdapter<>(
+                adapter = new ArrayAdapter<User>(
                         this,
                         android.R.layout.simple_list_item_1,
                         getUsers());
@@ -127,8 +127,8 @@ public class miniproject extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    private ArrayList<String> getUsers() {
-        ArrayList<String> usersFullNames = new ArrayList<>();
+    private ArrayList<User> getUsers() {
+        ArrayList<User> usersFullNames = new ArrayList<>();
 
         try {
             InputStream inputStream = getAssets().open("users.json");
@@ -151,13 +151,18 @@ public class miniproject extends AppCompatActivity implements View.OnClickListen
                 JSONObject user = jsonArray.getJSONObject(i);
                 JSONObject userName = user.getJSONObject("name");
 
-                usersFullNames.add(String.format("%s %s\n", userName.get("first"), userName.get("last")));
+                usersFullNames.add(new User(
+                        userName.getString("first"),
+                        userName.getString("last"),
+                        user.getString("gender"),
+                        user.getString("city")));
+
             }
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 
         return usersFullNames;
-        //display json data in a list view
+        //nice
     }
 }

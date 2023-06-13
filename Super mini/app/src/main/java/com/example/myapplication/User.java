@@ -46,6 +46,6 @@ package com.example.myapplication;
         }
 
         public String fullName() {
-            return String.format("%s %s", firstName, lastName);
+            return String.format("%s %s", firstName, lastName);// clss created
         }
 }
