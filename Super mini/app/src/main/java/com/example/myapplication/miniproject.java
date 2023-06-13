@@ -86,83 +86,46 @@ public class miniproject extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnusersactloadusers) {
-            ArrayAdapter<User> adapter = null;
-            try {
-                InputStream inputStream = getAssets().open("users.json");
-                int code;
-                StringBuilder stringBuilder = new StringBuilder();
-                String jsonString;
-                adapter = new ArrayAdapter<User>(
-                        this,
-                        android.R.layout.simple_list_item_1,
-                        getUsers());
+//            ArrayAdapter<User> adapter = new ArrayAdapter<>(
+//                    this,
+//                    android.R.layout.simple_list_item_1,
+//                    getUsers());
+            usersadapter adapter = new usersadapter(this , getUsers());
 
-                code = inputStream.read();
-                while (code != -1) {
-                    stringBuilder.append((char) code);
-
-                    code = inputStream.read();
-                }
-                jsonString = stringBuilder.toString();
-
-                JSONObject jsonObject = new JSONObject(jsonString);
-//                JSONArray jsonArray = (JSONArray) jsonObject.get("users");
-                JSONArray jsonArray = jsonObject.getJSONArray("users");
-                StringBuilder stringBuilderFullNames = new StringBuilder();
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject user = jsonArray.getJSONObject(i);
-                    JSONObject userName = user.getJSONObject("name");
-                    String fullName = String.format("%s %s\n", userName.get("first"), userName.get("last"));
-
-                    stringBuilderFullNames.append(fullName);
-                }
-
-                Toast.makeText(this, stringBuilderFullNames, Toast.LENGTH_SHORT).show();
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-            }
             lvusers.setAdapter(adapter);
         } else if (v.getId() == R.id.btnuseractquit) {
             finish();
         }
     }
-
     private ArrayList<User> getUsers() {
         ArrayList<User> usersFullNames = new ArrayList<>();
-
         try {
             InputStream inputStream = getAssets().open("users.json");
             int code;
             StringBuilder stringBuilder = new StringBuilder();
             String jsonString;
-
             code = inputStream.read();
             while (code != -1) {
                 stringBuilder.append((char) code);
-
                 code = inputStream.read();
             }
             jsonString = stringBuilder.toString();
-
             JSONObject jsonObject = new JSONObject(jsonString);
             JSONArray jsonArray = jsonObject.getJSONArray("users");
-
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject user = jsonArray.getJSONObject(i);
                 JSONObject userName = user.getJSONObject("name");
-
                 usersFullNames.add(new User(
                         userName.getString("first"),
                         userName.getString("last"),
                         user.getString("gender"),
                         user.getString("city")));
-
             }
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-
         return usersFullNames;
+
         //nice
     }
 }
