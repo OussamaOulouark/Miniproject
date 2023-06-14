@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+
 import java.util.ArrayList;
 
 public class usersadapter extends BaseAdapter {
@@ -44,15 +46,21 @@ public class usersadapter extends BaseAdapter {
     @SuppressLint("ViewHolder")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        User user = users.get(position);
         convertView = inflater.inflate(R.layout.item_user, null);
 
         TextView tvuserfullname = convertView.findViewById(R.id.TvuserItemFullname);
         TextView tvusercity = convertView.findViewById(R.id.Tviusercity);
         Button btndetailsitem = convertView.findViewById(R.id.btndetailsitem);
 
-        tvuserfullname.setText(users.get(position).fullName());
-        tvusercity.setText(users.get(position).getCity());
+        tvuserfullname.setText(user.fullName());
+        tvusercity.setText(user.getCity());
         btndetailsitem.setOnClickListener(v ->{
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(String.format("details of User %d" ,position +1 ))
+                    .setMessage(user.toString())
+                    .show();
+
 
         });
 

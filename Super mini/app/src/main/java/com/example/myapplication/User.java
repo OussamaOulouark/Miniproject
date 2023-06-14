@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
-    public class User {
+import androidx.annotation.NonNull;
+
+public class User {
         private String firstName;
         private String lastName;
         private String gender;
@@ -47,5 +49,14 @@ package com.example.myapplication;
 
         public String fullName() {
             return String.format("%s %s", firstName, lastName);// clss created
+        }
+        @NonNull
+        @Override
+        public String toString() {
+            return String.format("Hi, i'm %s, i'm %s.\nI live in %s.",
+                    fullName(),
+                    gender.equals("male") ? "♂" : "♀",
+                    city);
+
         }
 }
