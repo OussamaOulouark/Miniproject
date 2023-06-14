@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 
 public class usersadapter extends BaseAdapter {
     Context context;
+
+    final int DOUBLE_CLICK_TIMEOUT = 250;
 
     ArrayList<User> users;
 
@@ -49,8 +52,12 @@ public class usersadapter extends BaseAdapter {
         User user = users.get(position);
         convertView = inflater.inflate(R.layout.item_user, null);
 
+
         TextView tvuserfullname = convertView.findViewById(R.id.TvuserItemFullname);
         TextView tvusercity = convertView.findViewById(R.id.Tviusercity);
+        ImageView TVusercheck = convertView.findViewById(R.id.TVusercheck);
+
+
 
 
         tvuserfullname.setText(user.fullName());
@@ -68,14 +75,30 @@ public class usersadapter extends BaseAdapter {
        });
 
        convertView.setOnTouchListener(new View.OnTouchListener() {
+           long lastClickTime = 0;
            @Override
            public boolean onTouch(View v, MotionEvent event) {
-               if (event.getAction() == MotionEvent.ACTION_DOWN)
 
-                Toast.makeText(context, "down", Toast.LENGTH_SHORT).show();
+               switch (event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        Toast.makeText(context, "down", Toast.LENGTH_SHORT).show();
+//                        break;
+                   case MotionEvent.ACTION_UP:
+                       long clickTime = System.currentTimeMillis();
+
+                       if ((clickTime - lastClickTime) <= DOUBLE_CLICK_TIMEOUT)
+                           TVusercheck.setVisibility
+                                   (TVusercheck.getVisibility() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE);
+//                           ivUserItmChecked.setVisibility(ivUserItmChecked.getVisibility() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE);
+                       else
+                           lastClickTime = clickTime;
+
+                       break;
+               }
                return true;
            }
        });
+
 
 
 
