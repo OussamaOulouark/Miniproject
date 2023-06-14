@@ -1,4 +1,5 @@
 package com.example.myapplication;
+//ONSEIPTOUCHLISTNER
 
 import android.content.Context;
 import android.view.GestureDetector;
@@ -18,6 +19,11 @@ public class OnSwipTouchListner implements View.OnTouchListener {
     }
 
     class GestureListener extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onDown(@NonNull MotionEvent e) {
+            return true;
+        }
+
         @Override
         public boolean onFling(@NonNull MotionEvent e1, @NonNull MotionEvent e2, float velocityX, float velocityY) {
             if (e1.getX() - e2.getX() >= THRESHOLD)

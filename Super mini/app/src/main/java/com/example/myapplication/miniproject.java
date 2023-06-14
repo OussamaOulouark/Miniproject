@@ -49,56 +49,18 @@ public class miniproject extends AppCompatActivity implements View.OnClickListen
             public void swipeLeft() {
                 finish();
 
+
+            }
+
+            @Override
+            public void swipeRight() {
+                Toast.makeText(miniproject.this, "This action is not yet implemented, if you want to quit the app. please swipe left !!!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
 
         ArrayList<String> names = new ArrayList<>();
-
-//        names.add("kal");
-//        names.add("lok");
-//        names.add("fill");
-//        names.add("kal");
-//        names.add("lok");
-//        names.add("fill");
-//        names.add("kal");
-//        names.add("lok");
-//        names.add("fill");
-//        names.add("kal");
-//        names.add("lok");
-//        names.add("fill");
-//
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this , android.R.layout.simple_list_item_1,names);
-//
-//        lvusers.setAdapter(adapter);
-
-
-//        try {
-//            InputStream inputStream = getAssets().open("users.json");
-//            int code ;
-//            StringBuilder stringBuilder = new StringBuilder();
-//            String jsonstring ;
-//            code = inputStream.read();
-//            while (code != -1){
-//                stringBuilder.append((char) code);
-//                code = inputStream.read();
-//            }
-//            jsonstring = stringBuilder.toString();
-//            Toast.makeText(this, jsonstring, Toast.LENGTH_SHORT).show();
-//
-//
-//        }catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }else if (v.getId() == R.id.btnuseractquit){
-//
-//        finish();
-//    }
-//}
-//    }
-
-
 
     @Override
     public void onClick(View v) {

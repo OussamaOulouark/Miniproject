@@ -1,7 +1,9 @@
+//USERADAPTER
 package com.example.myapplication;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -63,45 +65,39 @@ public class usersadapter extends BaseAdapter {
         tvuserfullname.setText(user.fullName());
         tvusercity.setText(user.getCity());
 
-       convertView.setOnLongClickListener(new View.OnLongClickListener() {
-           @Override
-           public boolean onLongClick(View v) {
-               AlertDialog.Builder builder = new AlertDialog.Builder(context);
-               builder.setTitle(String.format("details of User %d" ,position +1 ))
-                       .setMessage(user.toString())
-                       .show();
-               return false;
-           }
-       });
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(String.format("details of User %d" ,position +1 ))
+                        .setMessage(user.toString())
+                        .show();
+                return false;
+            }
+        });
 
-       convertView.setOnTouchListener(new View.OnTouchListener() {
-           long lastClickTime = 0;
-           @Override
-           public boolean onTouch(View v, MotionEvent event) {
+        convertView.setOnTouchListener(new OnSwipTouchListner(context) {
+            long lastClickTime = 0;
 
-               switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        Toast.makeText(context, "down", Toast.LENGTH_SHORT).show();
-//                        break;
-                   case MotionEvent.ACTION_UP:
-                       long clickTime = System.currentTimeMillis();
+            @Override
+            public void swipeLeft() {
 
-                       if ((clickTime - lastClickTime) <= DOUBLE_CLICK_TIMEOUT)
-                           TVusercheck.setVisibility
-                                   (TVusercheck.getVisibility() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE);
-//                           ivUserItmChecked.setVisibility(ivUserItmChecked.getVisibility() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE);
-                       else
-                           lastClickTime = clickTime;
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(String.format("details of User %d" ,position +1 ))
+                        .setMessage("are you sure")
+                        .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                users.remove(user);
+                                notifyDataSetChanged();
+                                Toast.makeText(context, "User deleted", Toast.LENGTH_SHORT).show();
 
-                       break;
-               }
-               return true;
-           }
-       });
-
-
-
-
+                            }
+                        })
+                        .setNegativeButton("no", null)
+                        .show();
+            }
+        });
 
         return convertView;
     }
