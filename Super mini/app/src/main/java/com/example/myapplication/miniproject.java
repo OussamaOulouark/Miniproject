@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,20 +43,18 @@ public class miniproject extends AppCompatActivity implements View.OnClickListen
         btnusersactloadusers.setOnClickListener(this);
         TVuseractquit.setOnClickListener(this);
 
-        GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onFling(@NonNull MotionEvent e1, @NonNull MotionEvent e2, float velocityX, float velocityY) {
-                if (e1.getX() - e2.getX() >= 100)
-                    finish();
-                return super.onFling(e1, e2, velocityX, velocityY);
-            }
-        });
 
-        TVuseractquit.setOnTouchListener(new View.OnTouchListener() {
+        TVuseractquit.setOnTouchListener(new OnSwipTouchListner(this) {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                gestureDetector.onTouchEvent(event);
-                return false;
+            public void swipeLeft() {
+                finish();
+
+            }
+
+            @Override
+            public void swipeRight() {
+                Toast.makeText(miniproject.this, "This action is not yet implemented, if you want to quit the app. please swipe left !!!", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
