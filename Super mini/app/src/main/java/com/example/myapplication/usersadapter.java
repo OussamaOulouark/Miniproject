@@ -75,28 +75,15 @@ public class usersadapter extends BaseAdapter {
        });
 
        convertView.setOnTouchListener(new View.OnTouchListener() {
-           long lastClickTime = 0;
            @Override
            public boolean onTouch(View v, MotionEvent event) {
-
-               switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        Toast.makeText(context, "down", Toast.LENGTH_SHORT).show();
-//                        break;
-                   case MotionEvent.ACTION_UP:
-                       long clickTime = System.currentTimeMillis();
-
-                       if ((clickTime - lastClickTime) <= DOUBLE_CLICK_TIMEOUT)
-                           TVusercheck.setVisibility
-                                   (TVusercheck.getVisibility() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE);
-//                           ivUserItmChecked.setVisibility(ivUserItmChecked.getVisibility() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE);
-                       else
-                           lastClickTime = clickTime;
-
-                       break;
-               }
                return true;
            }
+
+           long lastClickTime = 0;
+
+
+
        });
 
 
