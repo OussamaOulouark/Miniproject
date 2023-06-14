@@ -2,12 +2,10 @@ package com.example.myapplication;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -51,18 +49,22 @@ public class usersadapter extends BaseAdapter {
 
         TextView tvuserfullname = convertView.findViewById(R.id.TvuserItemFullname);
         TextView tvusercity = convertView.findViewById(R.id.Tviusercity);
-        Button btndetailsitem = convertView.findViewById(R.id.btndetailsitem);
+
 
         tvuserfullname.setText(user.fullName());
         tvusercity.setText(user.getCity());
-        btndetailsitem.setOnClickListener(v ->{
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle(String.format("details of User %d" ,position +1 ))
-                    .setMessage(user.toString())
-                    .show();
 
+       convertView.setOnLongClickListener(new View.OnLongClickListener() {
+           @Override
+           public boolean onLongClick(View v) {
+               AlertDialog.Builder builder = new AlertDialog.Builder(context);
+               builder.setTitle(String.format("details of User %d" ,position +1 ))
+                       .setMessage(user.toString())
+                       .show();
+               return false;
+           }
+       });
 
-        });
 
 
         return convertView;
