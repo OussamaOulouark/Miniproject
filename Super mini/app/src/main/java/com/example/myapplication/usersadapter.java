@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class usersadapter extends BaseAdapter {
     Context context;
 
-    final int DOUBLE_CLICK_TIMEOUT = 250;
+    final int DOUBLE_CLICK_TIMEOUT = 2000;
 
     ArrayList<User> users;
 
@@ -63,45 +63,44 @@ public class usersadapter extends BaseAdapter {
         tvuserfullname.setText(user.fullName());
         tvusercity.setText(user.getCity());
 
-       convertView.setOnLongClickListener(new View.OnLongClickListener() {
-           @Override
-           public boolean onLongClick(View v) {
-               AlertDialog.Builder builder = new AlertDialog.Builder(context);
-               builder.setTitle(String.format("details of User %d" ,position +1 ))
-                       .setMessage(user.toString())
-                       .show();
-               return false;
-           }
-       });
+//       convertView.setOnLongClickListener(new View.OnLongClickListener() {
+//           @Override
+//           public boolean onLongClick(View v) {
+//               AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//               builder.setTitle(String.format("details of User %d" ,position +1 ))
+//                       .setMessage(user.toString())
+//                       .show();
+//               return false;
+//           }
+//       });
 
        convertView.setOnTouchListener(new View.OnTouchListener() {
            long lastClickTime = 0;
+           long clicktimer = 0;
            @Override
            public boolean onTouch(View v, MotionEvent event) {
 
                switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        Toast.makeText(context, "down", Toast.LENGTH_SHORT).show();
-//                        break;
+                   case MotionEvent.ACTION_DOWN:
+                       clicktimer = System.currentTimeMillis();
+
+                       break;
                    case MotionEvent.ACTION_UP:
                        long clickTime = System.currentTimeMillis();
 
-                       if ((clickTime - lastClickTime) <= DOUBLE_CLICK_TIMEOUT)
-                           TVusercheck.setVisibility
-                                   (TVusercheck.getVisibility() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE);
-//                           ivUserItmChecked.setVisibility(ivUserItmChecked.getVisibility() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE);
-                       else
-                           lastClickTime = clickTime;
+                       AlertDialog.Builder builder;
+                       if ((clickTime - clicktimer) <= 2000 && (clickTime - clicktimer) >= 1000) {
+                           builder = new AlertDialog.Builder(context);
+                           builder.setTitle(String.format("details of User %d", position + 1))
+                                   .setMessage(user.toString())
+                                   .show();
+                       }
 
                        break;
                }
                return true;
            }
        });
-
-
-
-
 
         return convertView;
     }
