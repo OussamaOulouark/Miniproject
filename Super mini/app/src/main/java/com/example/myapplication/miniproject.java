@@ -50,12 +50,6 @@ public class miniproject extends AppCompatActivity implements View.OnClickListen
                 finish();
 
             }
-
-            @Override
-            public void swipeRight() {
-                Toast.makeText(miniproject.this, "This action is not yet implemented, if you want to quit the app. please swipe left !!!", Toast.LENGTH_SHORT).show();
-
-            }
         });
     }
 
