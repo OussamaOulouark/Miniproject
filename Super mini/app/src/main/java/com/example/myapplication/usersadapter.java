@@ -2,12 +2,14 @@ package com.example.myapplication;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -51,21 +53,26 @@ public class usersadapter extends BaseAdapter {
 
         TextView tvuserfullname = convertView.findViewById(R.id.TvuserItemFullname);
         TextView tvusercity = convertView.findViewById(R.id.Tviusercity);
-        Button btndetailsitem = convertView.findViewById(R.id.btndetailsitem);
+        ImageButton btndetailsitem = convertView.findViewById(R.id.btnimage);
 
         tvuserfullname.setText(user.fullName());
         tvusercity.setText(user.getCity());
-        btndetailsitem.setOnClickListener(v ->{
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle(String.format("details of User %d" ,position +1 ))
-                    .setMessage(user.toString())
-                    .show();
-
-
+        btndetailsitem.setOnClickListener(v -> {
+            Intent intent = new Intent(context, activity_details.class);
+            intent.putExtra("firstname", user.getFirstName());
+            intent.putExtra("lastname", user.getLastName());
+            intent.putExtra("city", user.getCity());
+            intent.putExtra("gender", user.getGender());
+            context.startActivity(intent);
         });
 
-
         return convertView;
+
+
     }
 
-}
+
+
+    }
+
+
