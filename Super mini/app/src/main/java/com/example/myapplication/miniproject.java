@@ -4,10 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,7 +18,8 @@ import java.util.ArrayList;
 
 public class miniproject extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnusersactloadusers , btnuseractquit ;
+    Button btnusersactloadusers  ;
+    TextView  TVuseractquit;
     ListView lvusers ;
 
 
@@ -30,12 +30,12 @@ public class miniproject extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_main);
 
         btnusersactloadusers = findViewById(R.id.btnusersactloadusers);
-        btnuseractquit = findViewById(R.id.btnuseractquit);
+        TVuseractquit = findViewById(R.id.TVuseractquit);
         lvusers = findViewById(R.id.Lvusers);
 
 
         btnusersactloadusers.setOnClickListener(this);
-        btnuseractquit.setOnClickListener(this);
+        TVuseractquit.setOnClickListener(this);
 
         ArrayList<String> names = new ArrayList<>();
 
@@ -93,7 +93,7 @@ public class miniproject extends AppCompatActivity implements View.OnClickListen
             usersadapter adapter = new usersadapter(this , getUsers());
 
             lvusers.setAdapter(adapter);
-        } else if (v.getId() == R.id.btnuseractquit) {
+        } else if (v.getId() == R.id.TVuseractquit) {
             finish();
         }
     }
