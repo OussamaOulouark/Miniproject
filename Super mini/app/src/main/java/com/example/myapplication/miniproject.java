@@ -1,8 +1,12 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -24,6 +28,7 @@ public class miniproject extends AppCompatActivity implements View.OnClickListen
 
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,25 @@ public class miniproject extends AppCompatActivity implements View.OnClickListen
 
         btnusersactloadusers.setOnClickListener(this);
         TVuseractquit.setOnClickListener(this);
+
+        GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onFling(@NonNull MotionEvent e1, @NonNull MotionEvent e2, float velocityX, float velocityY) {
+                if (e1.getX() - e2.getX() >= 100)
+                    finish();
+                return super.onFling(e1, e2, velocityX, velocityY);
+            }
+        });
+
+        TVuseractquit.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                gestureDetector.onTouchEvent(event);
+                return false;
+            }
+        });
+    }
+
 
         ArrayList<String> names = new ArrayList<>();
 
@@ -82,7 +106,7 @@ public class miniproject extends AppCompatActivity implements View.OnClickListen
 //    }
 
 
-}
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnusersactloadusers) {
@@ -93,8 +117,6 @@ public class miniproject extends AppCompatActivity implements View.OnClickListen
             usersadapter adapter = new usersadapter(this , getUsers());
 
             lvusers.setAdapter(adapter);
-        } else if (v.getId() == R.id.TVuseractquit) {
-            finish();
         }
     }
     private ArrayList<User> getUsers() {
