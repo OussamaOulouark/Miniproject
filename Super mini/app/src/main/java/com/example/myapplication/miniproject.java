@@ -4,12 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,11 +27,9 @@ import java.util.ArrayList;
 
 public class miniproject extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnusersactloadusers  ;
-    TextView  TVuseractquit;
-    ListView lvusers ;
-
-
+    Button btnusersactloadusers;
+    TextView TVuseractquit;
+    ListView lvusers;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -39,79 +41,30 @@ public class miniproject extends AppCompatActivity implements View.OnClickListen
         TVuseractquit = findViewById(R.id.TVuseractquit);
         lvusers = findViewById(R.id.Lvusers);
 
-
         btnusersactloadusers.setOnClickListener(this);
         TVuseractquit.setOnClickListener(this);
-
 
         TVuseractquit.setOnTouchListener(new OnSwipTouchListner(this) {
             @Override
             public void swipeLeft() {
                 finish();
+            }
 
+            public void swipeRight() {
+                Toast.makeText(miniproject.this, "swipe right", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-
-        ArrayList<String> names = new ArrayList<>();
-
-//        names.add("kal");
-//        names.add("lok");
-//        names.add("fill");
-//        names.add("kal");
-//        names.add("lok");
-//        names.add("fill");
-//        names.add("kal");
-//        names.add("lok");
-//        names.add("fill");
-//        names.add("kal");
-//        names.add("lok");
-//        names.add("fill");
-//
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this , android.R.layout.simple_list_item_1,names);
-//
-//        lvusers.setAdapter(adapter);
-
-
-//        try {
-//            InputStream inputStream = getAssets().open("users.json");
-//            int code ;
-//            StringBuilder stringBuilder = new StringBuilder();
-//            String jsonstring ;
-//            code = inputStream.read();
-//            while (code != -1){
-//                stringBuilder.append((char) code);
-//                code = inputStream.read();
-//            }
-//            jsonstring = stringBuilder.toString();
-//            Toast.makeText(this, jsonstring, Toast.LENGTH_SHORT).show();
-//
-//
-//        }catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }else if (v.getId() == R.id.btnuseractquit){
-//
-//        finish();
-//    }
-//}
-//    }
-
-
-
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnusersactloadusers) {
-//            ArrayAdapter<User> adapter = new ArrayAdapter<>(
-//                    this,
-//                    android.R.layout.simple_list_item_1,
-//                    getUsers());
-            usersadapter adapter = new usersadapter(this , getUsers());
-
+            usersadapter adapter = new usersadapter(this, getUsers(), getSupportFragmentManager());
             lvusers.setAdapter(adapter);
         }
     }
+
+
     private ArrayList<User> getUsers() {
         ArrayList<User> usersFullNames = new ArrayList<>();
         try {
@@ -140,7 +93,5 @@ public class miniproject extends AppCompatActivity implements View.OnClickListen
             e.printStackTrace();
         }
         return usersFullNames;
-
-        //nice
     }
 }

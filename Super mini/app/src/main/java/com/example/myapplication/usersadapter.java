@@ -7,11 +7,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 
@@ -23,12 +25,13 @@ public class usersadapter extends BaseAdapter {
     ArrayList<User> users;
 
     LayoutInflater inflater;
+    FragmentManager fragmentManager;
 
-    public usersadapter(Context context, ArrayList<User> users) {
+    public usersadapter(Context context, ArrayList<User> users , FragmentManager fragmentManager) {
         this.users = users;
         this.context = context;
-
         inflater = LayoutInflater.from(context);
+        this.fragmentManager = fragmentManager;
     }
 
     @Override
@@ -56,6 +59,8 @@ public class usersadapter extends BaseAdapter {
         TextView tvuserfullname = convertView.findViewById(R.id.TvuserItemFullname);
         TextView tvusercity = convertView.findViewById(R.id.Tviusercity);
         ImageView TVusercheck = convertView.findViewById(R.id.TVusercheck);
+        Button btndetails = convertView.findViewById(R.id.btndetails);
+
 
 
 
@@ -75,31 +80,22 @@ public class usersadapter extends BaseAdapter {
        });
 
        convertView.setOnTouchListener(new View.OnTouchListener() {
-           long lastClickTime = 0;
            @Override
            public boolean onTouch(View v, MotionEvent event) {
-
-               switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        Toast.makeText(context, "down", Toast.LENGTH_SHORT).show();
-//                        break;
-                   case MotionEvent.ACTION_UP:
-                       long clickTime = System.currentTimeMillis();
-
-                       if ((clickTime - lastClickTime) <= DOUBLE_CLICK_TIMEOUT)
-                           TVusercheck.setVisibility
-                                   (TVusercheck.getVisibility() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE);
-//                           ivUserItmChecked.setVisibility(ivUserItmChecked.getVisibility() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE);
-                       else
-                           lastClickTime = clickTime;
-
-                       break;
-               }
                return true;
            }
+
+           long lastClickTime = 0;
+
+
+
        });
 
 
+       btndetails.setOnClickListener(v -> {
+           UserDetailsDialoge userDetailsDialoge = new UserDetailsDialoge(user);
+           userDetailsDialoge.show(fragmentManager , null);
+       });
 
 
 
